@@ -4,7 +4,7 @@
 >
   <div class="container">
     <h1>Classic Car Club</h1>
-    <p>View vintage cars from all over the world</p>
+    <p>Connect with vintage car lovers from across the world</p>
     <a href="/cars/new" class="btn btn-primary btn-large">Add Your Own Car</a>
     <p></p>
   </div>
@@ -17,6 +17,9 @@
       <img src="<%=car.image%>" alt="" class="card-img-top" />
       <div class="card-body">
         <h4 class="card-text"><%=car.make%> <%= car.model%></h4>
+        <a href="/cars/<%=car._id%>" class="card-text btn btn-link"
+          >More Info</a
+        >
       </div>
     </div>
   </div>

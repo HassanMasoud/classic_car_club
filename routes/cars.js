@@ -6,7 +6,7 @@ router.get("/", async (req, res) => {
   // res.render("cars", { cars: cars });
   try {
     const cars = await Car.find({});
-    res.render("cars", { cars: cars });
+    res.render("index", { cars: cars });
   } catch (err) {
     console.log(err);
   }
@@ -17,7 +17,13 @@ router.post("/", async (req, res) => {
     const make = req.body.make;
     const model = req.body.model;
     const image = req.body.image;
-    const newCar = new Car({ make: make, model: model, image: image });
+    const description = req.body.description;
+    const newCar = new Car({
+      make: make,
+      model: model,
+      image: image,
+      description: description
+    });
 
     await newCar.save(newCar);
     res.redirect("/cars");
@@ -29,6 +35,15 @@ router.post("/", async (req, res) => {
 
 router.get("/new", (req, res) => {
   res.render("new");
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const car = await Car.findById(req.params.id);
+    res.render("show", { car: car });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 module.exports = router;
