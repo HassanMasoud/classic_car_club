@@ -12,13 +12,19 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", (req, res) => {
-  const make = req.body.make;
-  const model = req.body.model;
-  const image = req.body.image;
-  const newCar = { make: make, model: model, image: image };
-  cars.push(newCar);
-  res.redirect("/cars");
+router.post("/", async (req, res) => {
+  try {
+    const make = req.body.make;
+    const model = req.body.model;
+    const image = req.body.image;
+    const newCar = new Car({ make: make, model: model, image: image });
+
+    await newCar.save(newCar);
+    res.redirect("/cars");
+  } catch (err) {
+    console.log(err);
+    res.redirect("/cars");
+  }
 });
 
 router.get("/new", (req, res) => {
