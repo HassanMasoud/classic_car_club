@@ -1,6 +1,16 @@
 const express = require("express");
 const app = express();
 const expressLayouts = require("express-ejs-layouts");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+
+const Car = require("./models/car");
+
+dotenv.config();
+
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }, () =>
+  console.log("Connected to MongoDB")
+);
 
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
