@@ -1,0 +1,8 @@
+<h1>This is the cars page</h1>
+
+<% cars.forEach(car => { %>
+<div>
+  <h4><%= car.make%></h4>
+  <img src="<%=car.image%>" alt="" width="150" height="100" />
+</div>
+<% }) %>
