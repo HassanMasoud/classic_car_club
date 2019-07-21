@@ -2,7 +2,7 @@
 
 <% cars.forEach(car => { %>
 <div>
-  <h4><%= car.make%></h4>
+  <h4><%=car.make%> <%= car.model%></h4>
   <img src="<%=car.image%>" alt="" width="150" height="100" />
 </div>
 <% }) %>
