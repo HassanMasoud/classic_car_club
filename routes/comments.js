@@ -28,6 +28,25 @@ router.post("/", isLoggedIn, async (req, res) => {
   }
 });
 
+router.get("/:comment_id/edit", async (req, res) => {
+  try {
+    const car = await Car.findById(req.params.id);
+    const comment = await Comment.findById(req.params.comment_id);
+    res.render("comments/edit", { comment: comment, car: car });
+  } catch (err) {
+    res.redirect("back");
+  }
+});
+
+router.put("/:comment_id", async (req, res) => {
+  try {
+    await Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment);
+    res.redirect(`/cars/${req.params.id}`);
+  } catch (err) {
+    res.redirect("back");
+  }
+});
+
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
