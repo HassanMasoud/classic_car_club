@@ -16,6 +16,13 @@ const carSchema = new mongoose.Schema({
   description: {
     type: String
   },
+  author: {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    },
+    username: String
+  },
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,

@@ -11,20 +11,15 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", isLoggedIn, async (req, res) => {
   try {
-    const make = req.body.make;
-    const model = req.body.model;
-    const image = req.body.image;
-    const description = req.body.description;
-    const newCar = new Car({
-      make: make,
-      model: model,
-      image: image,
-      description: description
-    });
-
-    await newCar.save(newCar);
+    const newCar = new Car(req.body.car);
+    const author = {
+      id: req.user._id,
+      username: req.user.username
+    };
+    newCar.author = author;
+    await newCar.save();
     res.redirect("/cars");
   } catch (err) {
     console.log(err);
@@ -32,7 +27,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/new", (req, res) => {
+router.get("/new", isLoggedIn, (req, res) => {
   res.render("cars/new");
 });
 
@@ -46,5 +41,12 @@ router.get("/:id", async (req, res) => {
     console.log(err);
   }
 });
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login");
+}
 
 module.exports = router;

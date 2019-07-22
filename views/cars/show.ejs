@@ -15,8 +15,10 @@
           <span><%=car.make%> <%=car.model%></span>
           <span class="card-title ml-auto">$150/hr</span>
         </h5>
-
         <p class="card-text"><%=car.description%></p>
+        <p class="card-text">
+          <em>Submitted by <%=car.author.username%></em>
+        </p>
       </div>
     </div>
     <div class="card mb-3 px-3 py-3">
