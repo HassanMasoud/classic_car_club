@@ -42,7 +42,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("/:id/edit", checkOwnership, async (req, res) => {
+router.get("/:id/edit", checkCarOwnership, async (req, res) => {
   try {
     const car = await Car.findById(req.params.id);
     res.render("cars/edit", { car: car });
@@ -51,7 +51,7 @@ router.get("/:id/edit", checkOwnership, async (req, res) => {
   }
 });
 
-router.put("/:id", checkOwnership, async (req, res) => {
+router.put("/:id", checkCarOwnership, async (req, res) => {
   try {
     await Car.findByIdAndUpdate(req.params.id, req.body.car);
     res.redirect(`/cars/${req.params.id}`);
@@ -60,7 +60,7 @@ router.put("/:id", checkOwnership, async (req, res) => {
   }
 });
 
-router.delete("/:id", checkOwnership, async (req, res) => {
+router.delete("/:id", checkCarOwnership, async (req, res) => {
   try {
     await Car.findByIdAndDelete(req.params.id);
     res.redirect("/cars");
@@ -76,7 +76,7 @@ function isLoggedIn(req, res, next) {
   res.redirect("/login");
 }
 
-async function checkOwnership(req, res, next) {
+async function checkCarOwnership(req, res, next) {
   if (req.isAuthenticated()) {
     try {
       const car = await Car.findById(req.params.id);

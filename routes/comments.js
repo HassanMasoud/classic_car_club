@@ -28,7 +28,7 @@ router.post("/", isLoggedIn, async (req, res) => {
   }
 });
 
-router.get("/:comment_id/edit", async (req, res) => {
+router.get("/:comment_id/edit", checkCommentOwnership, async (req, res) => {
   try {
     const car = await Car.findById(req.params.id);
     const comment = await Comment.findById(req.params.comment_id);
@@ -38,7 +38,7 @@ router.get("/:comment_id/edit", async (req, res) => {
   }
 });
 
-router.put("/:comment_id", async (req, res) => {
+router.put("/:comment_id", checkCommentOwnership, async (req, res) => {
   try {
     await Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment);
     res.redirect(`/cars/${req.params.id}`);
@@ -47,7 +47,7 @@ router.put("/:comment_id", async (req, res) => {
   }
 });
 
-router.delete("/:comment_id", async (req, res) => {
+router.delete("/:comment_id", checkCommentOwnership, async (req, res) => {
   try {
     await Comment.findByIdAndDelete(req.params.comment_id);
     res.redirect(`/cars/${req.params.id}`);
@@ -61,6 +61,23 @@ function isLoggedIn(req, res, next) {
     return next();
   }
   res.redirect("/login");
+}
+
+async function checkCommentOwnership(req, res, next) {
+  if (req.isAuthenticated()) {
+    try {
+      const comment = await Comment.findById(req.params.comment_id);
+      if (comment.author.id.equals(req.user._id)) {
+        next();
+      } else {
+        res.redirect("back");
+      }
+    } catch (err) {
+      res.redirect("back");
+    }
+  } else {
+    res.redirect("back");
+  }
 }
 
 module.exports = router;

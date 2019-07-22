@@ -38,6 +38,7 @@ app.use(methodOverride("_method"));
 app.use(expressLayouts);
 app.use(express.static("public"));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
+// Add current user to all routes
 app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
