@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+const methodOverride = require("method-override");
 const seedDB = require("./seeds");
 
 dotenv.config();
@@ -31,6 +32,7 @@ passport.deserializeUser(User.deserializeUser());
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 app.set("layout", "layouts/layout");
+app.use(methodOverride("_method"));
 app.use(expressLayouts);
 app.use(express.static("public"));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));

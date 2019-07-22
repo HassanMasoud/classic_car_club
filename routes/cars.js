@@ -42,6 +42,24 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/:id/edit", async (req, res) => {
+  try {
+    const car = await Car.findById(req.params.id);
+    res.render("cars/edit", { car: car });
+  } catch (err) {
+    res.redirect("/cars");
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  try {
+    await Car.findByIdAndUpdate(req.params.id, req.body.car);
+    res.redirect(`/cars/${req.params.id}`);
+  } catch (err) {
+    res.redirect("/cars");
+  }
+});
+
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
