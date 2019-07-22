@@ -32,18 +32,19 @@ const data = [
 const seedDB = async () => {
   try {
     await Car.deleteMany({});
-    console.log("Removed all cars");
-    data.forEach(async item => {
-      const car = await Car.create(item);
-      console.log("Added a new car");
-      const comment = await Comment.create({
-        text: "This car is awesome!",
-        author: "Crystal"
-      });
-      await car.comments.push(comment);
-      await car.save();
-      console.log("Comment created");
-    });
+    await Comment.deleteMany({});
+    // console.log("Removed all cars");
+    // data.forEach(async item => {
+    //   const car = await Car.create(item);
+    //   console.log("Added a new car");
+    //   const comment = await Comment.create({
+    //     text: "This car is awesome!",
+    //     author: "Crystal"
+    //   });
+    //   await car.comments.push(comment);
+    //   await car.save();
+    //   console.log("Comment created");
+    // });
   } catch (err) {
     console.log(err);
   }

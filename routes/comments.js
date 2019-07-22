@@ -16,6 +16,9 @@ router.post("/", isLoggedIn, async (req, res) => {
   try {
     const car = await Car.findById(req.params.id);
     const comment = await Comment.create(req.body.comment);
+    comment.author.id = req.user._id;
+    comment.author.username = req.user.username;
+    await comment.save();
     await car.comments.push(comment);
     await car.save();
     res.redirect(`/cars/${car._id}`);

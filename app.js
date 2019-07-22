@@ -39,7 +39,7 @@ app.use((req, res, next) => {
   next();
 });
 
-seedDB();
+// seedDB();
 
 const carRoutes = require("./routes/cars");
 const authRoutes = require("./routes/auth");
