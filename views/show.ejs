@@ -1,3 +1,6 @@
 <h1><%=car.make%> <%=car.model%></h1>
 <img src="<%=car.image%>" alt="" width="300px" height="200px" />
 <p><%=car.description%></p>
+<%car.comments.forEach(comment => { %>
+<p><strong><%=comment.author%></strong> - <%=comment.text%></p>
+<% })%>

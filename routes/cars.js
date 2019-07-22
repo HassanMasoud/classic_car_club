@@ -39,7 +39,9 @@ router.get("/new", (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const car = await Car.findById(req.params.id);
+    const car = await Car.findById(req.params.id)
+      .populate("comments")
+      .exec();
     res.render("show", { car: car });
   } catch (err) {
     console.log(err);

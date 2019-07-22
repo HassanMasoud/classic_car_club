@@ -3,6 +3,7 @@ const app = express();
 const expressLayouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const seedDB = require("./seeds");
 
 const Car = require("./models/car");
 
@@ -18,6 +19,8 @@ app.set("layout", "layouts/layout");
 app.use(expressLayouts);
 app.use(express.static("public"));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
+
+seedDB();
 
 const carsRoute = require("./routes/cars");
 
