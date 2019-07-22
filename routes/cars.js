@@ -4,6 +4,7 @@ const Car = require("../models/car");
 const Comment = require("../models/comment");
 
 router.get("/", async (req, res) => {
+  console.log(req.user);
   try {
     const cars = await Car.find({});
     res.render("cars/index", { cars: cars });
