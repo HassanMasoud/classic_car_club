@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const Car = require("../models/car");
+const Comment = require("../models/comment");
 
 router.get("/", async (req, res) => {
-  // res.render("cars", { cars: cars });
   try {
     const cars = await Car.find({});
-    res.render("index", { cars: cars });
+    res.render("cars/index", { cars: cars });
   } catch (err) {
     console.log(err);
   }
@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/new", (req, res) => {
-  res.render("new");
+  res.render("cars/new");
 });
 
 router.get("/:id", async (req, res) => {
@@ -42,9 +42,31 @@ router.get("/:id", async (req, res) => {
     const car = await Car.findById(req.params.id)
       .populate("comments")
       .exec();
-    res.render("show", { car: car });
+    res.render("cars/show", { car: car });
   } catch (err) {
     console.log(err);
+  }
+});
+
+router.get("/:id/comments/new", async (req, res) => {
+  try {
+    const car = await Car.findById(req.params.id);
+    res.render("comments/new", { car: car });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post("/:id/comments", async (req, res) => {
+  try {
+    const car = await Car.findById(req.params.id);
+    const comment = await Comment.create(req.body.comment);
+    await car.comments.push(comment);
+    await car.save();
+    res.redirect(`/cars/${car._id}`);
+  } catch (err) {
+    console.log(err);
+    res.redirect("/cars");
   }
 });
 

@@ -4,3 +4,6 @@
 <%car.comments.forEach(comment => { %>
 <p><strong><%=comment.author%></strong> - <%=comment.text%></p>
 <% })%>
+<a class="btn btn-success" href="/cars/<%=car._id%>/comments/new"
+  >Add Comment</a
+>
