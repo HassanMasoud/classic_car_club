@@ -48,7 +48,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("/:id/comments/new", async (req, res) => {
+router.get("/:id/comments/new", isLoggedIn, async (req, res) => {
   try {
     const car = await Car.findById(req.params.id);
     res.render("comments/new", { car: car });
@@ -57,7 +57,7 @@ router.get("/:id/comments/new", async (req, res) => {
   }
 });
 
-router.post("/:id/comments", async (req, res) => {
+router.post("/:id/comments", isLoggedIn, async (req, res) => {
   try {
     const car = await Car.findById(req.params.id);
     const comment = await Comment.create(req.body.comment);
@@ -69,5 +69,12 @@ router.post("/:id/comments", async (req, res) => {
     res.redirect("/cars");
   }
 });
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login");
+}
 
 module.exports = router;
