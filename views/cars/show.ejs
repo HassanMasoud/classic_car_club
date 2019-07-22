@@ -16,9 +16,15 @@
           <span class="card-title ml-auto">$150/hr</span>
         </h5>
         <p class="card-text"><%=car.description%></p>
+        <% if(user && car.author.id.equals(user._id)) { %>
+        <p class="card-text">
+          <em>Submitted by me</em>
+        </p>
+        <% } else { %>
         <p class="card-text">
           <em>Submitted by <%=car.author.username%></em>
         </p>
+        <% } %> <% if(user && car.author.id.equals(user._id)) { %>
         <a href="/cars/<%=car._id%>/edit" class="btn btn-info">Edit</a>
         <form
           action="/cars/<%=car._id%>?_method=DELETE"
@@ -27,6 +33,7 @@
         >
           <button class="btn btn-danger">Delete</button>
         </form>
+        <% } %>
       </div>
     </div>
     <div class="card mb-3 px-3 py-3">
