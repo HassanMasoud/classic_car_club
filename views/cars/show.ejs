@@ -1,9 +1,44 @@
-<h1><%=car.make%> <%=car.model%></h1>
-<img src="<%=car.image%>" alt="" width="300px" height="200px" />
-<p><%=car.description%></p>
-<%car.comments.forEach(comment => { %>
-<p><strong><%=comment.author%></strong> - <%=comment.text%></p>
-<% })%>
-<a class="btn btn-success" href="/cars/<%=car._id%>/comments/new"
-  >Add Comment</a
->
+<div class="row">
+  <div class="col-md-3">
+    <p class="lead">Classic Car Club</p>
+    <div class="list-group">
+      <li class="list-group-item active">Info 1</li>
+      <li class="list-group-item">Info 2</li>
+      <li class="list-group-item">Info 3</li>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div class="card mb-3">
+      <img src="<%=car.image%>" alt="" class="card-img-top" />
+      <div class="card-body">
+        <h5 class="card-title d-flex">
+          <span><%=car.make%> <%=car.model%></span>
+          <span class="card-title ml-auto">$150/hr</span>
+        </h5>
+
+        <p class="card-text"><%=car.description%></p>
+      </div>
+    </div>
+    <div class="card mb-3 px-3 py-3">
+      <a
+        class="btn btn-success d-flex ml-auto mb-2"
+        href="/cars/<%=car._id%>/comments/new"
+        >Add Comment</a
+      >
+      <%car.comments.forEach(comment => { %>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="d-flex">
+            <strong class="card-text"><%=comment.author%></strong>
+            <span class="card-text ml-auto">10 days ago</span>
+          </div>
+          <p class="card-text mb-2">
+            <%=comment.text%>
+          </p>
+        </div>
+      </div>
+
+      <% })%>
+    </div>
+  </div>
+</div>
