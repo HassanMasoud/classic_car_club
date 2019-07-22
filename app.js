@@ -3,6 +3,8 @@ const app = express();
 const expressLayouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
 const seedDB = require("./seeds");
 
 dotenv.config();
