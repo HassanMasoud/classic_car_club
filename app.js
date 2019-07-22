@@ -39,6 +39,7 @@ seedDB();
 
 const carsRoute = require("./routes/cars");
 const authRoute = require("./routes/auth");
+const loginRoute = require("./routes/login");
 
 app.get("/", (req, res) => {
   res.render("landing");
@@ -46,6 +47,7 @@ app.get("/", (req, res) => {
 
 app.use("/cars", carsRoute);
 app.use("/register", authRoute);
+app.use("/login", loginRoute);
 
 app.listen(process.env.PORT || 3000, process.env.IP, () =>
   console.log("Server started")
