@@ -11,8 +11,10 @@ const seedDB = require("./seeds");
 
 dotenv.config();
 
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }, () =>
-  console.log("Connected to MongoDB")
+mongoose.connect(
+  process.env.DATABASE_URL,
+  { useNewUrlParser: true, useFindAndModify: false },
+  () => console.log("Connected to MongoDB")
 );
 
 app.use(

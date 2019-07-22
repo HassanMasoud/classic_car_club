@@ -19,7 +19,14 @@
         <p class="card-text">
           <em>Submitted by <%=car.author.username%></em>
         </p>
-        <a href="/cars/<%=car._id%>/edit" class="btn btn-dark">Edit</a>
+        <a href="/cars/<%=car._id%>/edit" class="btn btn-info">Edit</a>
+        <form
+          action="/cars/<%=car._id%>?_method=DELETE"
+          method="POST"
+          id="delete-form"
+        >
+          <button class="btn btn-danger">Delete</button>
+        </form>
       </div>
     </div>
     <div class="card mb-3 px-3 py-3">

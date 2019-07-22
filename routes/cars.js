@@ -60,6 +60,15 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  try {
+    await Car.findByIdAndDelete(req.params.id);
+    res.redirect("/cars");
+  } catch (err) {
+    res.redirect("/cars");
+  }
+});
+
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
