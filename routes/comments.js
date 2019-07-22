@@ -47,6 +47,15 @@ router.put("/:comment_id", async (req, res) => {
   }
 });
 
+router.delete("/:comment_id", async (req, res) => {
+  try {
+    await Comment.findByIdAndDelete(req.params.comment_id);
+    res.redirect(`/cars/${req.params.id}`);
+  } catch (err) {
+    res.redirect("back");
+  }
+});
+
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
