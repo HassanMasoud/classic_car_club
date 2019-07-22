@@ -41,34 +41,17 @@ app.use((req, res, next) => {
 
 seedDB();
 
-const carsRoute = require("./routes/cars");
-const authRoute = require("./routes/auth");
+const carRoutes = require("./routes/cars");
+const authRoutes = require("./routes/auth");
+const commentRoutes = require("./routes/comments");
 
 app.get("/", (req, res) => {
   res.render("landing");
 });
 
-app.use("/cars", carsRoute);
-app.use("/register", authRoute);
-
-// AUTH ROUTES
-app.get("/login", (req, res) => {
-  res.render("login");
-});
-
-app.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/cars",
-    failureRedirect: "/login"
-  }),
-  (req, res) => {}
-);
-
-app.get("/logout", (req, res) => {
-  req.logout();
-  res.redirect("/cars");
-});
+app.use("/cars", carRoutes);
+app.use("/cars/:id/comments", commentRoutes);
+app.use(authRoutes);
 
 app.listen(process.env.PORT || 3000, process.env.IP, () =>
   console.log("Server started")

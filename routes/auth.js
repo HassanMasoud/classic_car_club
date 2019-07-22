@@ -3,11 +3,11 @@ const router = express.Router();
 const passport = require("passport");
 const User = require("../models/user");
 
-router.get("/", (req, res) => {
+router.get("/register", (req, res) => {
   res.render("register");
 });
 
-router.post("/", async (req, res) => {
+router.post("/register", async (req, res) => {
   const { username, password } = req.body;
   const newUser = new User({ username: username });
   try {
@@ -21,5 +21,30 @@ router.post("/", async (req, res) => {
     return res.render("register");
   }
 });
+
+router.get("/login", (req, res) => {
+  res.render("login");
+});
+
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/cars",
+    failureRedirect: "/login"
+  }),
+  (req, res) => {}
+);
+
+router.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/cars");
+});
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login");
+}
 
 module.exports = router;
