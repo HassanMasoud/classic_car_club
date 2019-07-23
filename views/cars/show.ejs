@@ -15,7 +15,7 @@
         <div class="card-body">
           <h5 class="card-title d-flex">
             <span><%=car.make%> <%=car.model%></span>
-            <span class="card-title ml-auto">$150/hr</span>
+            <span class="card-title ml-auto">$<%=car.price%></span>
           </h5>
           <p class="card-text"><%=car.description%></p>
           <% if(user && car.author.id.equals(user._id)) { %>
