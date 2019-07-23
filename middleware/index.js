@@ -9,13 +9,18 @@ middlewareObj.checkCarOwnership = async (req, res, next) => {
       if (car.author.id.equals(req.user._id)) {
         next();
       } else {
-        res.redirect("back");
+        req.flash("error", "You don't have the permission to do that");
+        res.redirect("/cars");
       }
     } catch (err) {
-      res.redirect("back");
+      if (err || !car) {
+        req.flash("error", "Car not found");
+        res.redirect("/cars");
+      }
     }
   } else {
-    res.redirect("back");
+    req.flash("primary", "Please sign in first");
+    res.redirect("/login");
   }
 };
 
@@ -26,13 +31,18 @@ middlewareObj.checkCommentOwnership = async (req, res, next) => {
       if (comment.author.id.equals(req.user._id)) {
         next();
       } else {
-        res.redirect("back");
+        req.flash("error", "You don't have permission to do that");
+        res.redirect("/cars");
       }
     } catch (err) {
-      res.redirect("back");
+      if (err || !comment) {
+        req.flash("error", "Comment not found");
+        res.redirect("/cars");
+      }
     }
   } else {
-    res.redirect("back");
+    req.flash("primary", "Please sign in first");
+    res.redirect("/login");
   }
 };
 
@@ -40,6 +50,7 @@ middlewareObj.isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
+  req.flash("primary", "Please sign in first");
   res.redirect("/login");
 };
 

@@ -13,12 +13,12 @@ router.post("/register", async (req, res) => {
   try {
     const user = await User.register(newUser, password);
     await passport.authenticate("local")(req, res, () => {
+      req.flash("success", `Welcome to the club ${user.username}!`);
       res.redirect("/cars");
     });
-    console.log(user);
   } catch (err) {
-    console.log(err);
-    return res.render("register");
+    req.flash("error", err.message);
+    res.redirect("/register");
   }
 });
 
@@ -29,7 +29,9 @@ router.get("/login", (req, res) => {
 router.post(
   "/login",
   passport.authenticate("local", {
+    successFlash: "Awww yeah! Welcome back!",
     successRedirect: "/cars",
+    failureFlash: true,
     failureRedirect: "/login"
   }),
   (req, res) => {}

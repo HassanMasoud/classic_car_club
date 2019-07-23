@@ -24,7 +24,6 @@ router.post("/", middleware.isLoggedIn, async (req, res) => {
     await car.save();
     res.redirect(`/cars/${car._id}`);
   } catch (err) {
-    console.log(err);
     res.redirect("/cars");
   }
 });
@@ -38,7 +37,14 @@ router.get(
       const comment = await Comment.findById(req.params.comment_id);
       res.render("comments/edit", { comment: comment, car: car });
     } catch (err) {
-      res.redirect("back");
+      if (err || !car) {
+        req.flash("error", "Car not found");
+        res.redirect("/cars");
+      }
+      if (err || !comment) {
+        req.flash("error", "Comment not found");
+        res.redirect("/cars");
+      }
     }
   }
 );
@@ -62,18 +68,12 @@ router.delete(
   async (req, res) => {
     try {
       await Comment.findByIdAndDelete(req.params.comment_id);
+      req.flash("success", "Comment deleted");
       res.redirect(`/cars/${req.params.id}`);
     } catch (err) {
       res.redirect("back");
     }
   }
 );
-
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/login");
-}
 
 module.exports = router;

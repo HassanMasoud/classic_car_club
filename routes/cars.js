@@ -39,7 +39,10 @@ router.get("/:id", async (req, res) => {
       .exec();
     res.render("cars/show", { car: car });
   } catch (err) {
-    console.log(err);
+    if (err || !car) {
+      req.flash("error", "Car not found");
+      res.redirect("/cars");
+    }
   }
 });
 
@@ -64,6 +67,7 @@ router.put("/:id", middleware.checkCarOwnership, async (req, res) => {
 router.delete("/:id", middleware.checkCarOwnership, async (req, res) => {
   try {
     await Car.findByIdAndDelete(req.params.id);
+    req.flash("success", "Car deleted");
     res.redirect("/cars");
   } catch (err) {
     res.redirect("/cars");

@@ -7,6 +7,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const methodOverride = require("method-override");
+const flash = require("connect-flash");
 const seedDB = require("./seeds");
 
 dotenv.config();
@@ -25,6 +26,7 @@ app.use(
   })
 );
 
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -41,6 +43,9 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 // Add current user to all routes
 app.use((req, res, next) => {
   res.locals.user = req.user;
+  res.locals.primary = req.flash("primary");
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
   next();
 });
 
