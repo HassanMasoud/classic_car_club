@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Car = require("../models/car");
+const middleware = require("../middleware");
 
 router.get("/", async (req, res) => {
   try {
@@ -11,7 +12,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", isLoggedIn, async (req, res) => {
+router.post("/", middleware.isLoggedIn, async (req, res) => {
   try {
     const newCar = new Car(req.body.car);
     const author = {
@@ -27,7 +28,7 @@ router.post("/", isLoggedIn, async (req, res) => {
   }
 });
 
-router.get("/new", isLoggedIn, (req, res) => {
+router.get("/new", middleware.isLoggedIn, (req, res) => {
   res.render("cars/new");
 });
 
@@ -42,7 +43,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("/:id/edit", checkCarOwnership, async (req, res) => {
+router.get("/:id/edit", middleware.checkCarOwnership, async (req, res) => {
   try {
     const car = await Car.findById(req.params.id);
     res.render("cars/edit", { car: car });
@@ -51,7 +52,7 @@ router.get("/:id/edit", checkCarOwnership, async (req, res) => {
   }
 });
 
-router.put("/:id", checkCarOwnership, async (req, res) => {
+router.put("/:id", middleware.checkCarOwnership, async (req, res) => {
   try {
     await Car.findByIdAndUpdate(req.params.id, req.body.car);
     res.redirect(`/cars/${req.params.id}`);
@@ -60,7 +61,7 @@ router.put("/:id", checkCarOwnership, async (req, res) => {
   }
 });
 
-router.delete("/:id", checkCarOwnership, async (req, res) => {
+router.delete("/:id", middleware.checkCarOwnership, async (req, res) => {
   try {
     await Car.findByIdAndDelete(req.params.id);
     res.redirect("/cars");
@@ -68,29 +69,5 @@ router.delete("/:id", checkCarOwnership, async (req, res) => {
     res.redirect("/cars");
   }
 });
-
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/login");
-}
-
-async function checkCarOwnership(req, res, next) {
-  if (req.isAuthenticated()) {
-    try {
-      const car = await Car.findById(req.params.id);
-      if (car.author.id.equals(req.user._id)) {
-        next();
-      } else {
-        res.redirect("back");
-      }
-    } catch (err) {
-      res.redirect("back");
-    }
-  } else {
-    res.redirect("back");
-  }
-}
 
 module.exports = router;

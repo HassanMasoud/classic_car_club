@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router({ mergeParams: true });
 const Car = require("../models/car");
 const Comment = require("../models/comment");
+const middleware = require("../middleware");
 
-router.get("/new", isLoggedIn, async (req, res) => {
+router.get("/new", middleware.isLoggedIn, async (req, res) => {
   try {
     const car = await Car.findById(req.params.id);
     res.render("comments/new", { car: car });
@@ -12,7 +13,7 @@ router.get("/new", isLoggedIn, async (req, res) => {
   }
 });
 
-router.post("/", isLoggedIn, async (req, res) => {
+router.post("/", middleware.isLoggedIn, async (req, res) => {
   try {
     const car = await Car.findById(req.params.id);
     const comment = await Comment.create(req.body.comment);
@@ -28,56 +29,51 @@ router.post("/", isLoggedIn, async (req, res) => {
   }
 });
 
-router.get("/:comment_id/edit", checkCommentOwnership, async (req, res) => {
-  try {
-    const car = await Car.findById(req.params.id);
-    const comment = await Comment.findById(req.params.comment_id);
-    res.render("comments/edit", { comment: comment, car: car });
-  } catch (err) {
-    res.redirect("back");
+router.get(
+  "/:comment_id/edit",
+  middleware.checkCommentOwnership,
+  async (req, res) => {
+    try {
+      const car = await Car.findById(req.params.id);
+      const comment = await Comment.findById(req.params.comment_id);
+      res.render("comments/edit", { comment: comment, car: car });
+    } catch (err) {
+      res.redirect("back");
+    }
   }
-});
+);
 
-router.put("/:comment_id", checkCommentOwnership, async (req, res) => {
-  try {
-    await Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment);
-    res.redirect(`/cars/${req.params.id}`);
-  } catch (err) {
-    res.redirect("back");
+router.put(
+  "/:comment_id",
+  middleware.checkCommentOwnership,
+  async (req, res) => {
+    try {
+      await Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment);
+      res.redirect(`/cars/${req.params.id}`);
+    } catch (err) {
+      res.redirect("back");
+    }
   }
-});
+);
 
-router.delete("/:comment_id", checkCommentOwnership, async (req, res) => {
-  try {
-    await Comment.findByIdAndDelete(req.params.comment_id);
-    res.redirect(`/cars/${req.params.id}`);
-  } catch (err) {
-    res.redirect("back");
+router.delete(
+  "/:comment_id",
+  middleware.checkCommentOwnership,
+  async (req, res) => {
+    try {
+      await Comment.findByIdAndDelete(req.params.comment_id);
+      res.redirect(`/cars/${req.params.id}`);
+    } catch (err) {
+      res.redirect("back");
+    }
   }
-});
+);
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
   res.redirect("/login");
-}
-
-async function checkCommentOwnership(req, res, next) {
-  if (req.isAuthenticated()) {
-    try {
-      const comment = await Comment.findById(req.params.comment_id);
-      if (comment.author.id.equals(req.user._id)) {
-        next();
-      } else {
-        res.redirect("back");
-      }
-    } catch (err) {
-      res.redirect("back");
-    }
-  } else {
-    res.redirect("back");
-  }
 }
 
 module.exports = router;
