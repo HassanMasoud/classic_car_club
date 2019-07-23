@@ -1,8 +1,16 @@
-<h1>Login</h1>
-<form action="/login" method="POST">
-  <input type="text" name="username" placeholder="name" />
-  <input type="password" name="password" placeholder="password" minlength="6" />
-  <button type="submit">Login</button>
-</form>
-<br />
-<p>Don't have an account? <a href="/register">Sign Up</a></p>
+<%-include('./partials/header')%>
+<div class="container">
+  <h1>Login</h1>
+  <form action="/login" method="POST">
+    <input type="text" name="username" placeholder="name" />
+    <input
+      type="password"
+      name="password"
+      placeholder="password"
+      minlength="6"
+    />
+    <button type="submit">Login</button>
+  </form>
+  <br />
+  <p>Don't have an account? <a href="/register">Sign Up</a></p>
+</div>

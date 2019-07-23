@@ -1,27 +1,30 @@
-<header
-  class="jumbotron"
-  style="background-image: url(https://images.pexels.com/photos/919073/pexels-photo-919073.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260); background-size: cover; color: white;"
->
-  <div class="container">
-    <h1>Classic Car Club</h1>
-    <p>Connect with vintage car lovers from across the world</p>
-    <a href="/cars/new" class="btn btn-primary btn-large">Add Your Own Car</a>
-    <p></p>
-  </div>
-</header>
+<%-include('../partials/header')%>
+<div class="container">
+  <header
+    class="jumbotron"
+    style="background-image: url(https://images.pexels.com/photos/919073/pexels-photo-919073.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260); background-size: cover; color: white;"
+  >
+    <div class="container">
+      <h1>Classic Car Club</h1>
+      <p>Connect with vintage car lovers from across the world</p>
+      <a href="/cars/new" class="btn btn-primary btn-large">Add Your Own Car</a>
+      <p></p>
+    </div>
+  </header>
 
-<div class="row text-center" style="display: flex; flex-wrap: wrap;">
-  <% cars.forEach(car => { %>
-  <div class="col-md-3 col-sm-6">
-    <div class="card">
-      <img src="<%=car.image%>" alt="" class="card-img-top" />
-      <div class="card-body">
-        <h4 class="card-text"><%=car.make%> <%= car.model%></h4>
-        <a href="/cars/<%=car._id%>" class="card-text btn btn-link"
-          >More Info</a
-        >
+  <div class="row text-center" style="display: flex; flex-wrap: wrap;">
+    <% cars.forEach(car => { %>
+    <div class="col-md-3 col-sm-6">
+      <div class="card">
+        <img src="<%=car.image%>" alt="" class="card-img-top" />
+        <div class="card-body">
+          <h4 class="card-text"><%=car.make%> <%= car.model%></h4>
+          <a href="/cars/<%=car._id%>" class="card-text btn btn-info"
+            >More Info</a
+          >
+        </div>
       </div>
     </div>
+    <% }) %>
   </div>
-  <% }) %>
 </div>

@@ -1,5 +1,22 @@
-<h1>Landing Page</h1>
+<% if(error && error.length > 0){ %>
+<div class="alert alert-danger" role="alert">
+  <%= error %>
+</div>
+<% } %> <% if(success && success.length > 0){ %>
+<div class="alert alert-success" role="alert">
+  <%= success %>
+</div>
+<% } %>
 
-<p>Welcome To Classic Car Club</p>
+<div id="landing-header">
+  <h1>Welcome To Classic Car Club</h1>
+  <a href="/cars" class="btn btn-lg btn-success">View All Cars</a>
+</div>
 
-<a href="/cars">View All Cars</a>
+<ul class="slideshow">
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>

@@ -11,13 +11,15 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="/stylesheets/main.css" />
+    <link rel="stylesheet" href="/stylesheets/landing.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+      type="text/javascript"
+      async
+    ></script>
     <title>Document</title>
   </head>
   <body>
-    <%-include('../partials/header')%>
-    <div class="container">
-      <%- body %>
-    </div>
-    <%-include('../partials/footer')%>
+    <%- body %> <%-include('../partials/footer')%>
   </body>
 </html>

@@ -1,20 +1,23 @@
-<div class="row" style="display: flex; flex-direction: column">
-  <h1 class="text-center">Edit comment on <%=car.make%> <%=car.model%></h1>
-  <div style="min-width: 30%; margin: 25px auto;">
-    <form
-      action="/cars/<%=car._id%>/comments/<%=comment._id%>?_method=PUT"
-      method="POST"
-    >
-      <div class="form-group">
-        <input
-          class="form-control"
-          type="text"
-          value="<%=comment.text%>"
-          name="comment[text]"
-        />
-      </div>
-      <button class="btn btn-large btn-primary btn-block">Submit</button>
-    </form>
-    <a href="/cars/<%=car._id%>">Go Back</a>
+<%-include('../partials/header')%>
+<div class="container">
+  <div class="row" style="display: flex; flex-direction: column">
+    <h1 class="text-center">Edit comment on <%=car.make%> <%=car.model%></h1>
+    <div style="min-width: 30%; margin: 25px auto;">
+      <form
+        action="/cars/<%=car._id%>/comments/<%=comment._id%>?_method=PUT"
+        method="POST"
+      >
+        <div class="form-group">
+          <input
+            class="form-control"
+            type="text"
+            value="<%=comment.text%>"
+            name="comment[text]"
+          />
+        </div>
+        <button class="btn btn-large btn-primary btn-block">Submit</button>
+      </form>
+      <a href="/cars/<%=car._id%>">Go Back</a>
+    </div>
   </div>
 </div>
