@@ -20,7 +20,7 @@ mongoose.connect(
 
 app.use(
   require("express-session")({
-    secret: "Once again Rusty wins cutest dog!",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false
   })
