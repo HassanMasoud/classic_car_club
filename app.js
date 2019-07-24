@@ -58,6 +58,9 @@ const commentRoutes = require("./routes/comments");
 app.get("/", (req, res) => {
   res.render("landing");
 });
+app.get("/try", (req, res) => {
+  res.render("try");
+});
 
 app.use("/cars", carRoutes);
 app.use("/cars/:id/comments", commentRoutes);

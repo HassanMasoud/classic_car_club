@@ -12,19 +12,24 @@
     </div>
   </header>
 
-  <div class="row text-center" style="display: flex; flex-wrap: wrap;">
+  <div class="row text-center d-flex" style="flex-direction: row;">
     <% cars.forEach(car => { %>
-    <div class="col-md-3 col-sm-6">
-      <div class="card">
-        <img src="<%=car.image%>" alt="" class="card-img-top" />
-        <div class="card-body">
-          <h4 class="card-text"><%=car.make%> <%= car.model%></h4>
-          <a href="/cars/<%=car._id%>" class="card-text btn btn-info"
-            >More Info</a
-          >
+
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+      <a href="/cars/<%=car._id%>">
+        <div class="card h-100 car-wrapper">
+          <img
+            src="<%=car.image%>"
+            alt=""
+            class="card-img-top img-fluid car-show"
+          />
+          <!-- <div class="card-body">
+              <h4 class="card-text"><%= car.model%></h4>
+            </div> -->
         </div>
-      </div>
+      </a>
     </div>
+
     <% }) %>
   </div>
 </div>

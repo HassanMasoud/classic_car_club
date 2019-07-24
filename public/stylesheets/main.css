@@ -5,3 +5,32 @@
 body {
   background-color: white;
 }
+
+.car-show {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.car-wrapper {
+  position: relative;
+  float: left;
+  overflow: hidden;
+  width: 100%;
+  text-align: center;
+  background-color: rgb(129, 129, 129);
+  border: 0;
+}
+
+.car-wrapper * {
+  box-sizing: border-box;
+}
+
+.car-wrapper:hover img {
+  opacity: 0.5;
+  filter: grayscale(10%);
+}
+
+.car-wrapper * {
+  transition: all 0.1s ease-in-out;
+}
