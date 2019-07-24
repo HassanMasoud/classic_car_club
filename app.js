@@ -1,16 +1,16 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 const express = require("express");
 const app = express();
 const expressLayouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const seedDB = require("./seeds");
-
-dotenv.config();
 
 mongoose.connect(
   process.env.DATABASE_URL,
