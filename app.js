@@ -11,6 +11,7 @@ const User = require("./models/user");
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const seedDB = require("./seeds");
+const favicon = require('express-favicon')
 
 mongoose.connect(
   process.env.DATABASE_URL,
@@ -48,6 +49,7 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
+app.use(favicon(__dirname + "/public/favicon.ico"));
 
 // seedDB();
 
