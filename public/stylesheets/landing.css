@@ -51,11 +51,11 @@ body {
   animation-delay: 20s;
 }
 .slideshow li:nth-child(4) {
-  background-image: url(https://images.pexels.com/photos/315952/pexels-photo-315952.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500);
+  background-image: url(https://images.pexels.com/photos/981035/pexels-photo-981035.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
   animation-delay: 30s;
 }
 .slideshow li:nth-child(5) {
-  background-image: url(https://images.pexels.com/photos/627678/pexels-photo-627678.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500);
+  background-image: url(https://images.pexels.com/photos/253096/pexels-photo-253096.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
   animation-delay: 40s;
 }
 
